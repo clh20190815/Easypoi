@@ -67,7 +67,7 @@ public class ExcelImportController {
 		//System.out.println("导入数据一共【"+personList.size()+"】行");
 		try {
 			ImportParams params = new ImportParams();
-			params.setSaveUrl("/static/img/");
+			params.setSaveUrl("static/img/");
 			params.setNeedSave(true);
 			List<PersonExportVo> result = ExcelImportUtil.importExcel(
 					new File("C:/Users/QC/Desktop/pp.xlsx"),
