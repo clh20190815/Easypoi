@@ -2,11 +2,9 @@ package easypoi.controller;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
-import easypoi.entity.CourseEntity;
-import easypoi.entity.Person;
-import easypoi.entity.PersonExportVo;
-import easypoi.entity.User;
+import easypoi.entity.*;
 import easypoi.service.CourseService;
+import easypoi.service.EntityService;
 import easypoi.service.PersonService;
 import easypoi.service.UserService;
 import easypoi.util.ExcelUtils;
@@ -31,6 +29,8 @@ public class ExcelExportController {
     CourseService courseService;
     @Autowired
     PersonService personService;
+    @Autowired
+    EntityService entityService;
 
     @RequestMapping(value = "/1", method = RequestMethod.GET)
     public void exportExcel(HttpServletResponse response) throws IOException {
@@ -79,7 +79,14 @@ public class ExcelExportController {
         // 导出操作
         ExcelUtils.exportExcel(person, "日程表", "日程", Person.class, "person.xls", response);
     }
-
+    @RequestMapping(value = "/5", method = RequestMethod.GET)
+    public void exportEntity(HttpServletResponse response) throws IOException {
+        System.out.println(1);
+        // 模拟从数据库获取需要导出的数据
+        List<Entity> entity = entityService.findAll();
+        // 导出操作
+        ExcelUtils.exportExcel(entity, null, "模板", Entity.class, "Entity.xls", response);
+    }
 }
 
 

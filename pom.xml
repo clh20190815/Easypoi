@@ -26,9 +26,9 @@
 
     <!-- 这个依赖相当于上面 easypoi-base、easypoi-web、easypoi-annotation这3个依赖,可以引入上面3个依赖，也可以引入下面这一个，两个方案二选一-->
      	<dependency>
-        <groupId>cn.afterturn</groupId>
-          <artifactId>easypoi-spring-boot-starter</artifactId>
-          <version>4.2.0</version>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-spring-boot-starter</artifactId>
+            <version>4.2.0</version>
         </dependency>
     <!-- 集成springboot web组件 -->
     <dependency>

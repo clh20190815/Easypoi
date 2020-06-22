@@ -5,10 +5,7 @@ import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.result.ExcelImportResult;
 import com.alibaba.fastjson.JSONObject;
-import easypoi.entity.CourseEntity;
-import easypoi.entity.Person;
-import easypoi.entity.PersonExportVo;
-import easypoi.entity.User;
+import easypoi.entity.*;
 import easypoi.util.ExcelUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -137,7 +134,7 @@ public class ExcelImportController {
 			ExcelImportResult<Person> result =
 					ExcelImportUtil.importExcelMore(file.getInputStream(), Person.class, importParams);
 			List<Person> personList = result.getList();
-			for (int i = 0; i < personList.size(); i++) {
+			for (int i = 0;  i < personList.size(); i++) {
 				// System.out.println(User);
 				log.info("从Excel导入数据到数据库的详细为 ：{}", ReflectionToStringBuilder.toString(personList.get(i)));
 				//TODO 将导入的数据做保存数据库操作
@@ -145,6 +142,51 @@ public class ExcelImportController {
 			}
 
 			log.info("从Excel导入数据一共 {} 行 ", personList.size());
+
+		} catch (IOException e) {
+
+			log.error("导入失败：{}", e.getMessage());
+
+		} catch (Exception e) {
+			log.error("导入失败：{}", e.getMessage());
+		}
+
+		return "导入成功";
+
+	}
+	@RequestMapping(value = "/import/5",method = RequestMethod.POST)
+	public String importExcel5(@RequestParam("file") MultipartFile file) {
+		ImportParams importParams = new ImportParams();
+		// 数据处理(没有表头和标题是要注释掉)
+		importParams.setHeadRows(2);
+		importParams.setTitleRows(0);
+		//开启保存
+		importParams.setNeedSave(true);
+		//Excel保存路径
+		importParams.setSaveUrl("C:/Users/QC/Desktop/Easypoi/static/");
+
+		// 需要验证
+		importParams.setNeedVerify(true);
+		try {
+
+			ExcelImportResult<Entity> result =
+					ExcelImportUtil.importExcelMore(file.getInputStream(), Entity.class, importParams);
+			List<Entity> entityList = result.getList();
+			for (int i = 0;  i < entityList.size(); i++) {
+				// System.out.println(User);
+				log.info("从Excel导入数据到数据库的详细为 ：{}", ReflectionToStringBuilder.toString(entityList.get(i)));
+				//TODO 将导入的数据做保存数据库操作
+
+			}
+			System.out.println("是否校验失败: " + result.isVerifyFail());
+			System.out.println("校验失败的集合:" + JSONObject.toJSONString(result.getFailList()));
+			System.out.println("校验通过的集合:" + JSONObject.toJSONString(result.getList()));
+			for (Entity entity : result.getFailList()) {
+				String msg = "第" + entity.getRowNum() + "行的错误是：" + entity.getErrorMsg();
+				System.out.println(msg);
+			}
+
+			log.info("从Excel导入数据一共 {} 行 ", entityList.size());
 
 		} catch (IOException e) {
 

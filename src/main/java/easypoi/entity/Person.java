@@ -20,11 +20,5 @@ public class Person implements Serializable {
     @ExcelCollection(name="日常", orderNum = "2")
     private List<Life> life;
 
-//    /**
-//     * 人脸图片
-//     */
-//    @Excel(name = "时段图片", orderNum = "4", width = 15, height = 30, type = 2,imageType = 1,savePath = "C:/Users/QC/Desktop/Easypoi/static/img",isImportField = "true")
-//    private String imageUrl;
-
 
 }
